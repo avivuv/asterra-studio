@@ -1,0 +1,70 @@
+// Skema database Asterra Studio — lihat docs/DATABASE.md.
+// Perubahan skema WAJIB lewat migrasi Prisma (prisma migrate dev), bukan edit manual DB.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  // Prisma 7: URL koneksi ada di prisma.config.ts (driver adapter), bukan di sini.
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id          String         @id @default(cuid())
+  code        String         @unique // kode produk (SKU) unik, wajib diisi admin
+  name        String
+  slug        String         @unique
+  description String?        @db.Text // TEXT tak boleh punya DEFAULT (MySQL strict) → nullable
+  price       Int // rupiah sebagai integer
+  stock       Int            @default(0)
+  isActive    Boolean        @default(true)
+  isFeatured  Boolean        @default(false) // produk unggulan (tampil di section "Produk Pilihan")
+  promoPrice  Int?           // harga promo (opsional); bila diisi → produk sedang diskon. price = harga normal
+  categoryId  String
+  category    Category       @relation(fields: [categoryId], references: [id])
+  images      ProductImage[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([categoryId])
+  @@index([isActive])
+  @@index([isFeatured])
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String // URL publik untuk ditampilkan
+  publicId  String // ID objek di penyedia storage; dipakai imageService untuk menghapus
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String // hash bcrypt
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id              String   @id @default("default")
+  storeName       String
+  waNumber        String
+  messageTemplate String   @db.Text
+  updatedAt       DateTime @updatedAt
+}
