@@ -16,6 +16,7 @@ Baca dokumen yang relevan sebelum mengerjakan tugas:
 | `docs/DATABASE.md` | Rancangan skema DB, relasi, indeks, seed |
 | `docs/tickets/` | Task development per tiket (board di `INDEX.md`), urut Fase 1–5 |
 | `docs/implementations/` | Dokumen implementasi per tiket (ditulis setelah tiket selesai) |
+| `docs/DEPLOY.md` | Panduan deploy produksi (Vercel + MySQL serverless) |
 
 ## 1. Tentang Project
 

@@ -53,7 +53,7 @@ Status semua tiket. Kerjakan berurutan; dependency dirancang searah. Legenda sta
 |-------|-------|-------|-----------|-----|--------|
 | [P5-01](P5-01-pengaturan-toko.md) | Pengaturan toko (settingService + form) | K | P0 | P4-02,P3-04 | ✅ |
 | [P5-02](P5-02-dashboard.md) | Dashboard ringkasan admin | L | P1 | P4-04 | ✅ |
-| [P5-03](P5-03-deploy.md) | Deploy Vercel + migrasi PlanetScale | — | P0 | semua P0 | ⬜ |
+| [P5-03](P5-03-deploy.md) | Deploy Vercel + migrasi PlanetScale | — | P0 | semua P0 | 🟡 siap (ikuti DEPLOY.md) |
 
 ---
 
